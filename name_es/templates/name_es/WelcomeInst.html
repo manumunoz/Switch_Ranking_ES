@@ -1,0 +1,148 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+<div class="container">
+    <div class="row">
+      <div class="col-sm-12 border border-dark text-white rounded" id="upper">
+        <h2> Bienvenido a este estudio </h2>
+      </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+</div>
+<div class="container">
+    <div class="row">
+      <div class="col-sm-2 border text-white rounded" id="network">
+            <img width="100%" src="{% static "name_es/Img_A1.jpeg" %}"/>
+      </div>
+      <div class="col-sm-10 border rounded" id="pale">
+        <p>
+            <br>
+            Usted recibirá un pago mínimo de <b>{{ Constants.min_pay }} {{ Constants.currency }}</b> por participar
+            en este estudio.
+            Por favor lea cuidadosamente las siguientes instrucciones para saber cómo podrá ganar <b>dinero adicional</b>.
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2 border text-white rounded" id="network">
+            <img width="100%" src="{% static "name_es/Img_A2.jpeg" %}"/>
+      </div>
+      <div class="col-sm-10 border rounded" id="pale">
+        <p>
+            <br>
+            Todas las interacciones ocurren a través de los computadores. Por favor, no hable o se comunique con los demás
+            jugadores de ninguna otra manera.
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2 border text-white rounded" id="network">
+            <img width="100%" src="{% static "name_es/Img_A3.jpeg" %}"/>
+      </div>
+      <div class="col-sm-10 border rounded" id="pale">
+        <p>
+            <br>
+            Si tiene alguna pregunta, por favor levante su mano y un experimentalista vendrá a responder su pregunta de
+            manera privada.
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2 border text-white rounded" id="network">
+            <img width="100%" src="{% static "name_es/Img_A4.jpeg" %}"/>
+      </div>
+      <div class="col-sm-10 border rounded" id="pale">
+        <p>
+            <br>
+            Este estudio es <b>anónimo</b>. Por lo tanto, su identidad no le será revelada a los demás jugadores ni
+            la de ellos le será revelada a usted.
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2 border text-white rounded" id="network">
+            <img width="100%" src="{% static "name_es/Img_A5.jpeg" %}"/>
+      </div>
+      <div class="col-sm-10 border rounded" id="pale">
+        <p>
+            <br>
+            Este estudio tiene <b>4 partes</b>. A continuación usted leerá solamente
+            las instrucciones de la Parte {{ Constants.part_name }}. Una vez la Parte {{ Constants.part_name }} termine,
+            usted leerá las instrucciones de la Parte {{ Constants.part_fixed }}, y asi. En todas las cuatro
+            partes usted interactuará con los mismos jugadores.
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2 border text-white rounded" id="network">
+            <img width="100%" src="{% static "name_es/Img_A6.png" %}"/>
+      </div>
+      <div class="col-sm-10 border rounded" id="pale">
+        <p>
+            <br>
+            Usted participará con otros {{ Constants.others }} jugadores en las distintas partes de este experimento.
+            {{ Constants.total_circles }} de los jugadores serán asignados al grupo &#9679 y
+            {{ Constants.total_triangles }} serán asignados al grupo &#9650. Esto se explica en las siguientes pantallas.
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2 border text-white rounded" id="network">
+            <img width="100%" src="{% static "name_es/Img_A7.jpeg" %}"/>
+      </div>
+      <div class="col-sm-10 border rounded" id="pale">
+        <p>
+            <br>
+            En este experimento usted podrá ganar {{ Constants.exp_currency }} dependiendo de sus decisiones
+            y de las decisiones de los demás jugadores. Cuántos puntos puede ganar se explica en las instrucciones de cada
+            parte. Al finalizar el estudio, convertiremos el total de {{ Constants.exp_currency }} que usted haya ganado a
+            {{ Constants.currency }} utilizando la siguiente tasa de cambio: <b>{{ Constants.points_exchange }} {{ Constants.exp_currency }} =
+            {{ Constants.currency_exchange }} {{ Constants.currency }}</b>. Usted recibirá sus ganancias en efectivo.
+        </p>
+            <button type="otree-btn-next" class="btn button btn-md" style="float: right;"> Continuar </button>
+          <br><br>
+      </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block styles %}
+    <style type="text/css">
+        img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .button {
+            background-color: #000000;
+            color: #EEE8AA;
+            border: 2px solid #EEE8AA
+        }
+        .button:hover {
+            background-color: #EEE8AA;
+            color: #000000;
+            border: 2px solid #000000
+        }
+        #upper{
+            background-color: #000000;
+        }
+        #middle{
+            background-color: #424242;
+        }
+        #lower{
+            color: #EEE8AA
+        }
+        #network{
+            background-color: #ffffff;
+        }
+        #pale{
+            background-color: #F5F5F5;
+        }
+    </style>
+{% endblock %}

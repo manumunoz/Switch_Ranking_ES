@@ -1,0 +1,156 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+<div class="container">
+    <div class="row">
+      <div class="col-sm-12 border border-dark text-white rounded" id="upper">
+          <h2>Su <span id="lower">Grupo</span> y <span id="lower">Apariencia</span>:</h2>
+      </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+      <div class="col-sm-6 border border-dark text-white rounded mb-1" id="middle">
+        <h5>
+          Al inicio de cada una de las {{ Constants.rounds_fixed }} rondas de la Parte {{ Constants.part_fluid }},
+            <span id="lower">antes de la etapa de Elección de Grupo</span>:
+        </h5>
+          <br>
+            {% if player.treat == 1 or player.treat == 4 %}
+                {% if player.given_type == 1 %}
+                <h5>Como usted es uno de los jugadores con el <span id='lower'>menor número</span> de sumas correctas,
+                su grupo inicial será:</h5>
+                <h1 id='lower'>&#9679 "{{ circles_label }}"</h1>
+                <h5>Su apariencia inicial será:</h5>
+                <h1 id='lower'>&#9711</h1>
+                {% elif player.given_type == 5 %}
+                <h5>Como usted es uno de los jugadores con el <span id='lower'>mayor número</span> de sumas correctas,
+                su grupo inicial será:</h5>
+                <h1 id='lower'>&#9650 "{{ triangles_label }}"</h1>
+                <h5>Su apariencia inicial será:</h5>
+                <h1 id='lower'>&#9651</h1>
+                {% endif %}
+            {% elif player.treat == 2 or player.treat == 5 %}
+                {% if player.given_type == 1 %}
+                <h5>Como usted es uno de los jugadores con el <span id='lower'>menor número</span> de sumas correctas,
+                su grupo inicial será:</h5>
+                <h1 id='lower'>&#9679 "{{ circles_label }}"</h1>
+                <h5>Su apariencia será:</h5>
+                <h1 id='lower'>&#9711</h1>
+                {% elif player.given_type == 5 %}
+                <h5>Como usted es uno de los jugadores con el <span id='lower'>mayor número</span> de sumas correctas,
+                su grupo inicial será:</h5>
+                <h1 id='lower'>&#9650 "{{ triangles_label }}"</h1>
+                <h5>Su apariencia será:</h5>
+                <h1 id='lower'>&#9651</h1>
+                {% endif %}
+            {% elif player.treat == 3 or player.treat == 6 %}
+                {% if player.given_type == 1 %}
+                <h5>Como usted es uno de los jugadores con el <span id='lower'>menor número</span> de sumas correctas,
+                su grupo inicial (no visible) será:</h5>
+                <h1 id='lower'>&#9679 "{{ circles_label }}"</h1>
+                <h5>Su apariencia (visible) será:</h5>
+                <h1 id='lower'>&#9711</h1>
+                {% elif player.given_type == 5 %}
+                <h5>Como usted es uno de los jugadores con el <span id='lower'>mayor número</span> de sumas correctas,
+                su grupo inicial (no visible) será:</h5>
+                <h1 id='lower'>&#9650 "{{ triangles_label }}"</h1>
+                <h5>Su apariencia (visible) será:</h5>
+                <h1 id='lower'>&#9651</h1>
+                {% endif %}
+            {% endif %}
+        </h3>
+      </div>
+
+      <div class="col-sm-6 border rounded" id="network">
+            <br>
+            {% if player.treat == 1 or player.treat == 4 %}
+                {% if player.given_type == 1 %}
+                <img width="100%" src="{% static "fluid_es/Img_T1.jpeg" %}"/>
+                {% elif player.given_type == 5 %}
+                <img width="100%" src="{% static "fluid_es/Img_T2.jpeg" %}"/>
+                {% endif %}
+            {% elif player.treat == 2 or player.treat == 5 %}
+                {% if player.given_type == 1 %}
+                <img width="100%" src="{% static "fluid_es/Img_T1.jpeg" %}"/>
+                {% elif player.given_type == 5 %}
+                <img width="100%" src="{% static "fluid_es/Img_T2.jpeg" %}"/>
+                {% endif %}
+            {% elif player.treat == 3 or player.treat == 6  %}
+                {% if player.given_type == 1 %}
+                <img width="100%" src="{% static "fluid_es/Img_T5.jpeg" %}"/>
+                {% elif player.given_type == 5 %}
+                <img width="100%" src="{% static "fluid_es/Img_T6.jpeg" %}"/>
+                {% endif %}
+            {% endif %}
+          <br><br>
+            <button type="otree-btn-next" class="btn button btn-md" style="float: right;"> Continuar </button>
+          <br><br>
+      </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block styles %}
+    <style type="text/css">
+        img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .button {
+            background-color: #000000;
+            color: #EEE8AA;
+            border: 2px solid #EEE8AA
+        }
+        .button:hover {
+            background-color: #EEE8AA;
+            color: #000000;
+            border: 2px solid #000000
+        }
+        #upper{
+            background-color: #000000;
+        }
+        #middle{
+            background-color: #424242;
+        }
+        #lower{
+            color: #EEE8AA
+        }
+        #network{
+            background-color: #ffffff;
+        }
+        #pale{
+            background-color: #F5F5F5;
+        }
+        .buttonup {
+            background-color: #9C27B0;
+            color: #ffffff;
+            border: 1px solid #AD1457;
+            padding: 1px 2px;
+            display: inline-block;
+            {#font-size: 13px;#}
+        }
+        .buttondown {
+            background-color: #00BCD4;
+            color: #ffffff;
+            border: 1px solid #00838F;
+            padding: 1px 2px;
+            display: inline-block;
+            {#font-size: 13px;#}
+        }
+        .button_inst {
+            background-color: #EEE8AA;
+            color: #000000;
+            border: 1px solid #000000;
+            padding: 1px 2px;
+            display: inline-block;
+            {#font-size: 13px;#}
+        }
+    </style>
+{% endblock %}

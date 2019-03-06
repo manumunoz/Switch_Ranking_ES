@@ -1,0 +1,87 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+<div class="container">
+    <div class="row">
+      <div class="col-sm-12 border border-dark text-white rounded" id="upper">
+          <h2>Su <span id="lower">Grupo</span> y <span id="lower">Apariencia</span>:</h2>
+      </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+      <div class="col-sm-6 border border-dark text-white rounded mb-1" id="middle">
+        <h5>
+          En cada una de las {{ Constants.rounds_fixed }} rondas de la Parte {{ Constants.part_fixed }}:
+        </h5>
+          <br><br>
+        {% if player.given_type == 1 %}
+            <h5>Usted es uno de los jugadores con el <span id='lower'>menor número</span> de sumas correctas.
+                Su grupo (símbolo interno) será:</h5>
+            <h1 id='lower'>&#9679 "{{ circles_label }}"</h1>
+            <h5>Su apariencia (símbolo externo) será:</h5>
+            <h1 id='lower'>&#9711</h1>
+        {% elif player.given_type == 5 %}
+            <h5>Usted es uno de los jugadores con el <span id='lower'>mayor número</span> de sumas correctas.
+                Su grupo (símbolo interno) será:</h5>
+            <h1 id='lower'>&#9650 "{{ triangles_label }}"</h1>
+            <h5>Su apariencia (símbolo externo) será:</h5>
+            <h1 id='lower'>&#9651</h1>
+        {% endif %}
+        </h3>
+      </div>
+      <div class="col-sm-6 border rounded" id="network">
+          <h5>Usted será ilustrado en la pantalla utilizando la siguiente imagen:</h5>
+            <br>
+          {% if player.given_type == 1 %}
+            <img width="100%" src="{% static "fixed_es/Img_T1.jpeg" %}"/>
+            {% elif player.given_type == 5 %}
+            <img width="100%" src="{% static "fixed_es/Img_T2.jpeg" %}"/>
+           {% endif %}
+          <br><br>
+            <button type="otree-btn-next" class="btn button btn-md" style="float: right;"> Continuar </button>
+          <br><br>
+      </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block styles %}
+    <style type="text/css">
+        img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .button {
+            background-color: #000000;
+            color: #EEE8AA;
+            border: 2px solid #EEE8AA
+        }
+        .button:hover {
+            background-color: #EEE8AA;
+            color: #000000;
+            border: 2px solid #000000
+        }
+        #upper{
+            background-color: #000000;
+        }
+        #middle{
+            background-color: #424242;
+        }
+        #lower{
+            color: #EEE8AA
+        }
+        #network{
+            background-color: #ffffff;
+        }
+        #pale{
+            background-color: #F5F5F5;
+        }
+    </style>
+{% endblock %}

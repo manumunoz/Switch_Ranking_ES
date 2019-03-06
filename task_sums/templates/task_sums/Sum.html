@@ -1,0 +1,137 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+<div class="container">
+    <div class="row">
+      <div class="col-sm-12 border border-dark text-white rounded" id="upper">
+          <h2>Tarea de sumas:
+              <!--{{ player.num_correct }})-->
+              <br>
+              <small id="lower">Encuentre el número mayor en cada matriz y reporte la suma de los dos números</small></h2>
+      </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+      <div class="col-sm-6 border rounded text-center" id="network">
+   <!--<div class="row">-->
+        <!--<div class="col-md-6 col-md-offset-1 text-center">-->
+            <table class="table table-bordered table-dark">
+                {% for row in player.m_left %}
+                <tr>
+                    {% for n in row %}
+                        <td style="padding: 5px">{{ n|floatformat:"0" }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+      <div class="col-sm-6 border rounded text-center" id="network">
+        <!--<div class="col-md-5 text-center">-->
+            <table class="table table-bordered table-dark">
+                {% for row in player.m_right %}
+                <tr>
+                    {% for n in row %}
+                        <td style="padding: 5px">{{ n|floatformat:"0" }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6 rounded " id="network">
+        <p>
+          <h3>Su respuesta:</h3>{% formfield player.answer label="" %} <!-- (Sol: {{ player.solution }})-->
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6 rounded" id="network">
+          <button type="otree-btn-next" class="btn button btn-md" style="float: left;"> Siguiente suma</button>
+      </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block styles %}
+    <style type="text/css">
+        #blue {
+            color: #2962FF
+        }
+        img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .button {
+            background-color: #000000;
+            color: #EEE8AA;
+            border: 2px solid #EEE8AA
+        }
+        .button:hover {
+            background-color: #EEE8AA;
+            color: #000000;
+            border: 2px solid #000000
+        }
+        #upper{
+            background-color: #000000;
+        }
+        #middle{
+            background-color: #424242;
+        }
+        #midi{
+            color: #424242;
+        }
+        #lower{
+            color: #EEE8AA
+        }
+        #network{
+            background-color: #ffffff;
+        }
+        #pale{
+            background-color: #F5F5F5;
+        }
+        #in_tie{
+            background-color: #000000;
+            color: #ffffff
+        }
+        #out_tie{
+            background-color: #616161;
+            color: #ffffff
+        }
+        .buttonup {
+            background-color: #9C27B0;
+            color: #ffffff;
+            border: 1px solid #AD1457;
+            padding: 1px 2px;
+            display: inline-block;
+            {#font-size: 13px;#}
+        }
+        .buttondown {
+            background-color: #00BCD4;
+            color: #ffffff;
+            border: 1px solid #00838F;
+            padding: 1px 2px;
+            display: inline-block;
+            {#font-size: 13px;#}
+        }
+        .button_inst2 {
+            background-color: #EEE8AA;
+            color: #000000;
+            border: 1px solid #000000;
+            padding: 1px 2px;
+            display: inline-block;
+            {#font-size: 13px;#}
+        }
+    </style>
+
+
+
+{% endblock %}
+

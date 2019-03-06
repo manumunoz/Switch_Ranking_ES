@@ -1,0 +1,195 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+<div class="container">
+    <div class="row">
+      <div class="col-sm-12 border border-dark text-white rounded" id="upper">
+          <h2>
+              (Ronda {{ subsession.round_number }} de {{ Constants.num_rounds}})
+          </h2>
+            <h5>
+            {% if player.treat == 1 or player.treat == 4 %}
+                {% if player.given_type == 1 %}
+                    Su grupo <span id='lower'>inicial </span> es <b id='lower'>&#9679 "{{ circles_label }}"</b> y su
+                    apariencia es <b id='lower'>&#9711</b>
+                {% elif player.given_type == 5 %}
+                    Su grupo <span id='lower'>inicial </span> es <b id='lower'>&#9650 "{{ triangles_label }}"</b> y su
+                    apariencia es <b id='lower'>&#9651</b>
+                {% endif %}
+            {% elif player.treat == 2 or player.treat == 5 %}
+                {% if player.given_type == 1 %}
+                    Su grupo <span id='lower'>inicial </span> es <b id='lower'>&#9679 "{{ circles_label }}"</b> y su
+                    apariencia es <b id='lower'>&#9711</b>
+                {% elif player.given_type == 5 %}
+                    Su grupo <span id='lower'>inicial </span> es <b id='lower'>&#9650 "{{ triangles_label }}"</b> y su
+                    apariencia es <b id='lower'>&#9651</b>
+                {% endif %}
+            {% elif player.treat == 3 or player.treat == 6 %}
+                {% if player.given_type == 1 %}
+                    Su grupo <span id='lower'>inicial </span> (no visible) es <b id='lower'>&#9679 "{{ circles_label }}"</b>
+                    y su apariencia (visible) es <b id='lower'>&#9711</b>
+                {% elif player.given_type == 5 %}
+                    Su grupo <span id='lower'>inicial </span> (no visible) es <b id='lower'>&#9650 "{{ triangles_label }}"</b>
+                    y su apariencia (visible) es <b id='lower'>&#9651</b>
+                {% endif %}
+            {% endif %}
+            </h5>
+      </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+      <div class="col-sm-12 border border-dark text-white rounded mb-1" id="middle">
+          <br>
+          <h5><span id="lower">En esta ronda:</span> Elija si quiere cambiarse al otro grupo o quedarse en su grupo.</h5>
+          Presione uno de los botones para <b>elegir un grupo</b>. <i>Usted será ilustrado en la pantalla usando la
+          imagen encima del botón que usted presione:
+            {% if player.treat >= 4 %}
+                Quedarse en el mismo grupo es gratis mientras que cambiarse de grupo tiene un costo fijo de
+                {{ Constants.switch_cost }} {{ Constants.exp_currency }} más {{ Constants.multiplier }} {{ Constants.exp_currency }}
+                por cada jugador en su grupo que no se haya cambiado.
+            {% endif %}
+          <br><br>
+      </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+      <div class="col-sm-6 border border-dark rounded mb-1" id="network">
+        <div>
+            <br>
+            <!--Change Block -->
+            {% if player.treat == 1 or player.treat == 4 %}
+                {% if player.given_type == 1 %}
+                    <img width="100%" src="{% static "fluid_es/Img_T2.jpeg" %}"/>
+                    <br>
+                    <button name="chosen_type" value="5" class="btn button btn-large"> Cambiar a &#9650 "{{ triangles_label }}"</button>
+                {% else %}
+                    <img width="100%" src="{% static "fluid_es/Img_T1.jpeg" %}"/>
+                    <br>
+                    <button name="chosen_type" value="1" class="btn button btn-large"> Cambiar a &#9679 "{{ circles_label }}"</button>
+                {% endif %}
+            {% elif player.treat == 2 or player.treat == 5 %}
+                {% if player.given_type == 1 %}
+                    <img width="100%" src="{% static "fluid_es/Img_T3.jpeg" %}"/>
+                    <br>
+                    <button name="chosen_type" value="2" class="btn button btn-large"> Cambiar a &#9650 "{{ triangles_label }}"</button>
+                {% else %}
+                    <img width="100%" src="{% static "fluid_es/Img_T4.jpeg" %}"/>
+                    <br>
+                    <button name="chosen_type" value="6" class="btn button btn-large"> Cambiar a &#9679 "{{ circles_label }}"</button>
+                {% endif %}
+            {% elif player.treat == 3 or player.treat == 6 %}
+                {% if player.given_type == 1 %}
+                    <img width="100%" src="{% static "fluid_es/Img_T5.jpeg" %}"/>
+                    <br>
+                    <button name="chosen_type" value="4" class="btn button btn-large"> Cambiar a &#9650 "{{ triangles_label }}"</button>
+                {% else %}
+                    <img width="100%" src="{% static "fluid_es/Img_T6.jpeg" %}"/>
+                    <br>
+                    <button name="chosen_type" value="7" class="btn button btn-large"> Cambiar a &#9679 "{{ circles_label }}"</button>
+                {% endif %}
+            {% endif %}
+        </div>
+          <br><br>
+      </div>
+      <div class="col-sm-6 border border-dark rounded mb-1" id="network">
+        <br>
+            <!--Stay Block -->
+            {% if player.treat == 1 or player.treat == 4 %}
+                {% if player.given_type == 1 %}
+                    <img width="100%" src="{% static "fluid_es/Img_T1.jpeg" %}"/>
+                    <br>
+                    <button name="chosen_type" value="1" class="btn button btn-large"> Quedarme como &#9679 "{{ circles_label }}"</button>
+                {% else %}
+                    <img width="100%" src="{% static "fluid_es/Img_T2.jpeg" %}"/>
+                    <br>
+                    <button name="chosen_type" value="5" class="btn button btn-large"> Quedarme como &#9650 "{{ triangles_label }}"</button>
+                {% endif %}
+            {% elif player.treat == 2 or player.treat == 5 %}
+                {% if player.given_type == 1 %}
+                    <img width="100%" src="{% static "fluid_es/Img_T1.jpeg" %}"/>
+                    <br>
+                    <button name="chosen_type" value="1" class="btn button btn-large"> Quedarme como &#9679 "{{ circles_label }}"</button>
+                {% else %}
+                    <img width="100%" src="{% static "fluid_es/Img_T2.jpeg" %}"/>
+                    <br>
+                    <button name="chosen_type" value="5" class="btn button btn-large"> Quedarme como &#9650 "{{ triangles_label }}"</button>
+                {% endif %}
+            {% elif player.treat == 3 or player.treat == 6 %}
+                {% if player.given_type == 1 %}
+                    <img width="100%" src="{% static "fluid_es/Img_T5.jpeg" %}"/>
+                    <br>
+                    <button name="chosen_type" value="3" class="btn button btn-large"> Quedarme como &#9679 "{{ circles_label }}"</button>
+                {% else %}
+                    <img width="100%" src="{% static "fluid_es/Img_T6.jpeg" %}"/>
+                    <br>
+                    <button name="chosen_type" value="8" class="btn button btn-large"> Quedarme como &#9650 "{{ triangles_label }}"</button>
+                {% endif %}
+            {% endif %}
+        </div>
+          <br><br>
+      </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block styles %}
+    <style type="text/css">
+        .center {
+            text-align: center;
+        }
+        .button {
+            background-color: #000000;
+            color: #EEE8AA;
+            border: 2px solid #EEE8AA;
+        }
+        .button:hover {
+            background-color: #EEE8AA;
+            color: #000000;
+            border: 2px solid #000000
+        }
+        #upper{
+            background-color: #000000;
+        }
+        #middle{
+            background-color: #424242;
+        }
+        #lower{
+            color: #EEE8AA
+        }
+        #network{
+            background-color: #ffffff;
+        }
+        .buttonup {
+            background-color: #9C27B0;
+            color: #ffffff;
+            border: 1px solid #AD1457;
+            padding: 1px 2px;
+            display: inline-block;
+            {#font-size: 13px;#}
+        }
+        .buttondown {
+            background-color: #00BCD4;
+            color: #ffffff;
+            border: 1px solid #00838F;
+            padding: 1px 2px;
+            display: inline-block;
+            {#font-size: 13px;#}
+        }
+        .button_inst {
+            background-color: #EEE8AA;
+            color: #000000;
+            border: 1px solid #000000;
+            padding: 1px 2px;
+            display: inline-block;
+            {#font-size: 13px;#}
+        }
+    </style>
+{% endblock %}

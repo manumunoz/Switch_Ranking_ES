@@ -1,0 +1,122 @@
+{% load otree staticfiles %}
+{% load static %}
+
+<div class="card bg-light instructions">
+    <div class="card-body">
+        <h2> Instrucciones de la Parte {{ Constants.part_fixed }}</h2>
+        <br>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-2 border text-white rounded" style='background-color: #ffffff;'>
+                    <img width="100%" src="{% static "fixed_es/Img_I1.png" %}"/>
+                </div>
+                <div class="col-sm-10 border rounded" style='background-color: #F8F8FF;'>
+                    <h5>Grupos, Apariencias y Etiquetas</h5>
+                    <p>
+                    En la Parte {{ Constants.part_fixed }} usted interactuará con otros {{ Constants.others }} jugadores.
+                    Al inicio del experimento cada uno de ustedes fue asignado a uno de dos grupo dependiendo del número
+                    de sumas correctas que haya logrado en la Parte {{ Constants.part_task }}:
+                    &#9650 "{{ triangles_label }}" si es uno de los {{ Constants.total_triangles }} jugadores
+                    con el <b>mayor número</b> de sumas correctas ó &#9679 "{{ circles_label }}" si es uno de los
+                    {{ Constants.total_circles }} jugadores con el <b>menor número</b> de sumas correctas.
+                    También le fue asignada una apariencia: &#9651 ó &#9711 (símbolo externo) y una etiqueta numérica
+                    (del 1 al {{ names }}). Su grupo y su apariencia están fijas durante todas las
+                    {{ Constants.rounds_fixed }} rondas en la Parte {{ Constants.part_fixed }} mientras que su etiqueta
+                    numérica y su posición en la pantallá cambiarán en cada ronda.
+                    <br>
+                    <b>En cada ronda hay 3 etapas.</b>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2 border text-white rounded" style='background-color: #ffffff;'>
+                    <img width="100%" src="{% static "fixed_es/Img_I2.png" %}"/>
+                </div>
+                <div class="col-sm-10 border rounded" style='background-color: #F8F8FF;'>
+                    <h5>Etapa 1: Conexiones</h5>
+                    <p>
+                    En la Etapa 1, usted le podrá proponer conexiones a los otros jugadores. Una conexión con otro jugador
+                    está <b>activa</b> si ambos, usted y el otro jugador, se proponen una conexión mutuamente. Cada
+                    conexión que usted proponga le costará {{ Constants.link_cost }} {{ Constants.exp_currency }},
+                    independiente de si también le proponen a usted o no.
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2 border text-white rounded" style='background-color: #ffffff;'>
+                    <img width="100%" src="{% static "fixed_es/Img_I3.png" %}"/>
+                </div>
+                <div class="col-sm-10 border rounded" style='background-color: #F8F8FF;'>
+                    <h5>Etapa 2: Acciones</h5>
+                    <p>
+                    En la Etapa 2, usted elegirá una acción: <button class="btn buttonup btn-sm" disabled>violeta</button>
+                    ó <button class="btn buttondown btn-sm" disabled>celeste</button>.
+                    Usted ganará {{ Constants.exp_currency }} dependiendo de su grupo, de la acción que usted elija, y
+                    del número de conexiones activas que hayan elegido <b>la misma acción</b> que usted:
+                    </p>
+                    <p>
+                    <b>Si su grupo es <b>&#9679 "{{ circles_label }}"</b> y usted:</b>
+                    <ul>
+                        <li>elige <button class="btn buttonup btn-sm" disabled>violeta</button>, usted recibe
+                            <b>{{ Constants.liked_gain }} {{ Constants.exp_currency }}</b> por cada
+                            conexión activa que también elija <button class="btn buttonup btn-sm" disabled>violeta</button> (incluyéndolo a usted)
+                            y <b>0 {{ Constants.exp_currency }}</b> por cualquier
+                            conexión activa que elija <button class="btn buttondown btn-sm" disabled>celeste</button> </li>
+                        <br>
+                        <li>elige <button class="btn buttondown btn-sm" disabled>celeste</button>, usted recibe
+                            <b>{{ Constants.disliked_gain }} {{ Constants.exp_currency }}</b> por cada
+                            conexión activa que también elija <button class="btn buttondown btn-sm" disabled>celeste</button> (incluyéndolo a usted)
+                            y <b>0 {{ Constants.exp_currency }}</b> por cualquier conexión activa que elija
+                            <button class="btn buttonup btn-sm" disabled>violeta</button> </li>
+                    </ul>
+                    </p>
+                    <p>
+                    <b>Si su grupo es <b>&#9650 "{{ triangles_label }}"</b> y usted:</b>
+                    <ul>
+                        <li>elige <button class="btn buttondown btn-sm" disabled>celeste</button>, usted recibe
+                            <b>{{ Constants.liked_gain }} {{ Constants.exp_currency }}</b> por cada
+                            conexión activa que también elija <button class="btn buttondown btn-sm" disabled>celeste</button> (incluyéndolo a usted)
+                            y <b>0 {{ Constants.exp_currency }}</b> por
+                            cualquier conexión activa que elija <button class="btn buttonup btn-sm" disabled>violeta</button> </li>
+                        <br>
+                        <li>elige <button class="btn buttonup btn-sm" disabled>violeta</button>, usted recibe
+                            <b>{{ Constants.disliked_gain }} {{ Constants.exp_currency }}</b> por cada
+                            conexión activa que también elija <button class="btn buttonup btn-sm" disabled>violeta</button> (incluyéndolo a usted)
+                            y <b>0 {{ Constants.exp_currency }}</b> por
+                            cualquier conexión activa que elija <button class="btn buttondown btn-sm" disabled>celeste</button> </li>
+                    </ul>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2 border text-white rounded" style='background-color: #ffffff;'>
+                    <img width="100%" src="{% static "fixed_es/Img_I4.png" %}"/>
+                </div>
+                <div class="col-sm-10 border rounded" style='background-color: #F8F8FF;'>
+                    <h5>Etapa 3: Resultados</h5>
+                    <p>
+                    En la etapa 3, usted verá cuántos {{ Constants.exp_currency }} recibe en esa ronda.
+                    Los {{ Constants.exp_currency }} de una ronda se calculan por las ganancias de coordinarse con sus
+                    conexiones activas menos los costos de las conexiones que haya propuesto. El borde de la apariencia
+                    de cada jugador (&#9711 ó &#9651) muestra la acción que ese jugador ha elegido.
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2 border text-white rounded" style='background-color: #ffffff;'>
+                    <img width="100%" src="{% static "fixed_es/Img_I5.png" %}"/>
+                </div>
+                <div class="col-sm-10 border rounded" style='background-color: #F8F8FF;'>
+                    <h5>Ganancias en la Parte {{ Constants.part_fixed }}</h5>
+                    <p>
+                    Usted participará por {{ Constants.rounds_fixed }} rondas en la Parte {{ Constants.part_fixed }}.
+                    Al finalizar el experimento, el computador <b>elegirá de manera aleatoria una de las
+                    {{ Constants.rounds_fixed }} rondas</b>.
+                    El número de {{ Constants.exp_currency }} que usted haya ganado en la ronda seleccionada será
+                    sumado al total de puntos utilizado para determinar su pago.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

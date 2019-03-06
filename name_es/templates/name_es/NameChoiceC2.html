@@ -1,0 +1,98 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+<div class="container">
+    <div class="row">
+      <div class="col-sm-12 border border-dark text-white rounded" id="upper">
+          <h2>Parte {{ Constants.part_name }}: <span id="lower"> Su grupo</span> (tercer intento)</h2>
+      </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 border rounded" id="network">
+            <div>
+              <p>
+                  <b>Inténtelo de nuevo. No todos los {{ Constants.total_circles }} jugadores en su grupo presionaron en el mismo botón.</b>
+                  <br><br>
+                    <i>Escriba en la caja de chat para comunicarse con los otros jugadores en su grupo.</i>
+              </p>
+            </div>
+            <div>
+                  {% chat nickname=player.chat_nickname channel=player.chat_channel %}
+            </div>
+            <div id="centering">
+                <br>
+              <p>
+                <b>Presione el botón con el nombre que su grupo ha elegido</b>.
+              </p>
+                <input type="hidden" value="0" name="group_name" id="group_name"/>
+                {% if player.given_type == 1 %}
+                <button type="otree-btn-next" class="btn button btn-lg" onclick="$('#group_name').val(5)">{{Constants.group_e}}</button>
+                <button type="otree-btn-next" class="btn button btn-lg" onclick="$('#group_name').val(2)">{{Constants.group_b}}</button>
+                <button type="otree-btn-next" class="btn button btn-lg" onclick="$('#group_name').val(1)">{{Constants.group_a}}</button>
+                <br>
+                <button type="otree-btn-next" class="btn button btn-lg" onclick="$('#group_name').val(4)">{{Constants.group_d}}</button>
+                <button type="otree-btn-next" class="btn button btn-lg" onclick="$('#group_name').val(3)">{{Constants.group_c}}</button>
+                {% elif player.given_type == 5 %}
+                <button type="otree-btn-next" class="btn button btn-lg" onclick="$('#group_name').val(10)">{{Constants.group_j}}</button>
+                <button type="otree-btn-next" class="btn button btn-lg" onclick="$('#group_name').val(7)">{{Constants.group_g}}</button>
+                <button type="otree-btn-next" class="btn button btn-lg" onclick="$('#group_name').val(6)">{{Constants.group_f}}</button>
+                <br>
+                <button type="otree-btn-next" class="btn button btn-lg" onclick="$('#group_name').val(9)">{{Constants.group_i}}</button>
+                <button type="otree-btn-next" class="btn button btn-lg" onclick="$('#group_name').val(8)">{{Constants.group_h}}</button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block styles %}
+    <style type="text/css">
+        img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .button {
+            background-color: #000000;
+            color: #EEE8AA;
+            border: 2px solid #EEE8AA
+        }
+        .button:hover {
+            background-color: #EEE8AA;
+            color: #000000;
+            border: 2px solid #000000
+        }
+        #upper{
+            background-color: #000000;
+        }
+        #middle{
+            background-color: #424242;
+        }
+        #lower{
+            color: #EEE8AA
+        }
+        #network{
+            background-color: #ffffff;
+        }
+        #symbol{
+            color: #616161;
+        }
+        .otree-chat__messages {
+            height: 400px;
+        }
+        .otree-chat__nickname {
+            color: #000000;
+            font-weight: bold;
+        }
+        #centering{
+            text-align: center
+        }
+    </style>
+{% endblock %}

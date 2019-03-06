@@ -1,0 +1,286 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+<div class="container">
+    <div class="row">
+      <div class="col-sm-12 border border-dark text-white rounded" id="upper">
+          <h2>
+              Usted es el jugador <b id="lower"> {{ player.name }}</b> <small>(Ronda {{ subsession.round_number }}
+              de {{ Constants.num_rounds}})</small>
+          </h2>
+            <h6>
+                {% if player.chosen_type == 1 %}
+                     Su grupo <span id='lower'>elegido </span> es <b id='lower'>&#9679 "{{ circles_label }}"</b>
+                        y su apariencia es <b id='lower'>&#9711</b>
+                {% elif player.chosen_type == 2 %}
+                    Su grupo <span id='lower'>elegido </span> es <b id='lower'>&#9650 "{{ triangles_label }}"</b>
+                        y su apariencia es <b id='lower'>&#9711</b>
+                {% elif player.chosen_type == 3 %}
+                    Su grupo <span id='lower'>elegido </span> es <b id='lower'>&#9679 "{{ circles_label }}"</b> (no visible a los demás)
+                        y su apariencia es <b id='lower'>&#9711</b> (visible a los demás)
+                {% elif player.chosen_type == 4 %}
+                    Su grupo <span id='lower'>elegido </span> es <b id='lower'>&#9650 "{{ triangles_label }}"</b> (no visible a los demás)
+                    y su apariencia es <b id='lower'>&#9711</b> (visible a los demás)
+                {% elif player.chosen_type == 5 %}
+                    Su grupo <span id='lower'>elegido </span> es <b id='lower'>&#9650 "{{ triangles_label }}"</b>
+                        y su apariencia es <b id='lower'>&#9651</b>
+                {% elif player.chosen_type == 6 %}
+                    Su grupo <span id='lower'>elegido </span> es <b id='lower'>&#9679 "{{ circles_label }}"</b>
+                        y su apariencia es <b id='lower'>&#9651</b>
+                {% elif player.chosen_type == 7 %}
+                    Su grupo <span id='lower'>elegido </span> es <b id='lower'>&#9679 "{{ circles_label }}"</b> (no visible a los demás)
+                    y su apariencia es <b id='lower'>&#9651</b> (visible a los demás)
+                {% else %}
+                    Su grupo <span id='lower'>elegido </span> es <b id='lower'>&#9650 "{{ triangles_label }}"</b> (no visible a los demás)
+                    y su apariencia es <b id='lower'>&#9651</b> (visible a los demás)
+                {% endif %}
+            </h6>
+      </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+      <div class="col-sm-3 border border-dark text-white rounded p-3 mb-1" id="middle">
+          <h5 id="lower">Etapa 2: Conexiones</h5>
+        <p>
+            Seleccione a cada jugador a quien quiera proponerle una conexión:
+        </p>
+
+            {% for f in form %}
+                {% formfield f %}
+            {% endfor %}
+
+          <br><br>
+        <button type="otree-btn-next" class="btn button btn-md"> Continuar </button>
+      </div>
+      <div class="col-sm-9 border border-dark rounded p-3 mb-1" id="network">
+        <b>Grupos elegidos en la Etapa 1:</b>
+        <div id="cy"></div>
+            <div class="container ">
+                <div class="row">
+
+                </div>
+            </div>
+      </div>
+    </div>
+</div>
+<div>
+    <br><br>
+    <input type="hidden" value="0" name="inst_show" id="inst_show"/>
+    <button type="button" class="btn button_inst btn-large" onclick="$('#inst_show').val(1); document.getElementById('demo').style.display='block'">
+        Ver Resumen
+    </button>
+    <br><br>
+    <div id="demo" style="display:none">
+        {% include Constants.instructions_template %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.1.0/cytoscape.js"></script>
+    <script>
+        var jsonnet = JSON.parse('{{group.network_data|safe}}');
+        var player_id = {{ player.name }};
+        console.log(jsonnet);
+        var cy = window.cy = cytoscape({
+            container: document.getElementById('cy'),
+
+        });
+
+        // Add isMine = 'yes' to all player's node and edges
+        jsonnet.elements = jsonnet.elements.map(
+            function(value) {
+                if ( value.group === 'nodes' && value.data.name == player_id)
+                {
+                    value.data.isMine = 'yes'
+                }
+                else {
+                    value.data.isMine = 'no'
+                }
+                if ( (value.group === 'nodes' && value.data.location == 1) || (value.group === 'nodes' && value.data.location == 2) ||
+                        (value.group === 'nodes' && value.data.location == 3) || (value.group === 'nodes' && value.data.location == 7) ||
+                        (value.group === 'nodes' && value.data.location == 6)
+                ) {
+                    value.data.vertPos = 'top'
+                }
+                else {
+                    value.data.vertPos = 'bottom'
+                }
+                if ( (value.group === 'nodes' && value.data.location == 1) || (value.group === 'nodes' && value.data.location == 2) ||
+                        (value.group === 'nodes' && value.data.location == 3) || (value.group === 'nodes' && value.data.location == 4)
+                ) {
+                    value.data.horPos = 'right'
+                }
+                else {
+                    value.data.horPos = 'left'
+                }
+                return value
+            });
+
+        console.log(jsonnet)
+        cy.json(jsonnet);
+
+        var layout = cy.layout({name: 'circle'});
+
+        layout.run();
+        //cy.center('node[isMine="yes"]');
+        cy.panBy('node[isMine="yes"]');
+        //cy.fit();
+        // Centra en el nodo pero no con los demás al rededor
+
+        cy.style()
+            // NODES ==============================================
+            .selector('node')
+            .style('padding-relative-to', 'width')
+            // Node Labels: Top
+            .selector('node[vertPos="top"]')
+            .style('text-valign','top')
+            // Node Labels: Bottom
+            .selector('node[vertPos="bottom"]')
+            .style('text-valign','bottom')
+            // Node Labels: Right
+            .selector('node[horPos="right"]')
+            .style('text-halign','right')
+            // Node Labels: Left
+            .selector('node[horPos="left"]')
+            .style('text-halign','left')
+            // Nodes: type == 1
+            .selector('node[shape=1]')
+            .style('shape', 'ellipse')
+            .style('background-image', 'url("{% static "fluid_es/circle.png" %}")')
+            .style('background-image-opacity', '0.7')
+            .style('background-fit', 'contain')
+            // Nodes: type == 2
+            .selector('node[shape=2]')
+            .style('shape', 'ellipse')
+            .style('background-image', 'url("{% static "fluid_es/triangle.png" %}")')
+            .style('background-image-opacity', '0.7')
+            .style('background-fit', 'contain')
+            // Nodes: type == 3
+            .selector('node[shape=3]')
+            .style('shape', 'ellipse')
+            // Nodes: type == 4
+            .selector('node[shape=4]')
+            .style('shape', 'ellipse')
+            // Nodes: type == 5
+            .selector('node[shape=5]')
+            .style('shape', 'triangle')
+            .style('background-image', 'url("{% static "fluid_es/triangle.png" %}")')
+            .style('background-image-opacity', '0.7')
+            .style('background-fit', 'contain')
+            // Nodes: type == 6
+            .selector('node[shape=6]')
+            .style('shape', 'triangle')
+            .style('background-image', 'url("{% static "fluid_es/circle.png" %}")')
+            .style('background-image-opacity', '0.7')
+            .style('background-fit', 'contain')
+            // Nodes: type == 7
+            .selector('node[shape=7]')
+            .style('shape', 'triangle')
+            // Nodes: type == 8
+            .selector('node[shape=8]')
+            .style('shape', 'triangle')
+            // My Node
+            .selector('node[isMine="yes"]')
+            .style('width', '35px')
+            .style('height', '35px')
+            .style('background-color', '#CFD8DC')
+            .style('border-width', '4')
+            .style('border-color', '#000000')
+            .style('font-size','25pt')
+            .style('color','#000000')
+            // NOT My Node
+            .selector('node[isMine="no"]')
+            .style('border-width', '2')
+            .style('border-color', '#424242')
+            .style('background-color', '#ffffff')
+            .style('font-size','15')
+            .style('color','#000000')
+            // ====================================================
+            .update() // update the elements in the graph with the new style
+        ;
+
+        cy.userZoomingEnabled(false);
+        cy.autoungrabify(true);
+    </script>
+{% endblock %}
+
+{% block styles %}
+    <style type="text/css">
+        #cy {
+            width: 100%;
+            height: 500px;
+            display: block;
+        }
+        #white{
+            color: #ffffff;
+        }
+        .center {
+            text-align: center;
+        }
+        .button {
+            background-color: #000000;
+            color: #EEE8AA;
+            border: 2px solid #EEE8AA
+        }
+        .button:hover {
+            background-color: #EEE8AA;
+            color: #000000;
+            border: 2px solid #000000
+        }
+        .button_inst {
+            background-color: #EEE8AA;
+            color: #000000;
+            border: 2px solid #000000
+        }
+        .button_inst:hover {
+            background-color: #000000;
+            color: #EEE8AA;
+            border: 2px solid #EEE8AA
+        }
+        #upper{
+            background-color: #000000;
+        }
+        #middle{
+            background-color: #424242;
+        }
+        #lower{
+            color: #EEE8AA
+        }
+        #network{
+            background-color: #ffffff;
+        }
+        #pale{
+            background-color: #F5F5F5;
+        }
+        #in_tie{
+            background-color: #000000;
+            color: #ffffff
+        }
+        #out_tie{
+            background-color: #616161;
+            color: #ffffff
+        }
+        .buttonup {
+            background-color: #9C27B0;
+            color: #ffffff;
+            border: 1px solid #AD1457;
+            padding: 1px 2px;
+            display: inline-block;
+            {#font-size: 13px;#}
+        }
+        .buttondown {
+            background-color: #00BCD4;
+            color: #ffffff;
+            border: 1px solid #00838F;
+            padding: 1px 2px;
+            display: inline-block;
+            {#font-size: 13px;#}
+        }
+    </style>
+{% endblock %}

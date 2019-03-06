@@ -1,0 +1,119 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+<div class="container">
+    <div class="row">
+      <div class="col-sm-12 border border-dark text-white rounded" id="upper">
+          <h2>Puntos y <span id="lower">ganancias</span>:</h2>
+      </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+      <div class="col-sm-4 border border-dark text-white rounded mb-1" id="middle">
+          <p>
+              <b>Estos son los puntos que usted ganó en cada parte.</b>
+          </p>
+        <p>
+            En la Parte {{ Constants.part_fixed }} (ronda elegida: {{ part_fixed_round }}):
+            <h4 id='lower'> {{ part_fixed_payoff }} {{ Constants.exp_currency }}</h4>
+            En la Parte {{ Constants.part_fluid }} (ronda elegida: {{ part_fluid_round }}):
+            <h4 id='lower'> {{ part_fluid_payoff }} {{ Constants.exp_currency }}</h4>
+            En la Parte {{ Constants.part_alloc }}:
+            <h4 id='lower'> {{ part_alloc_payoff}} {{ Constants.exp_currency }}</h4>
+        </p>
+      </div>
+      <div class="col-sm-8 border rounded" id="network">
+          <p>
+          En total, usted ganó {{ player.total_points }} y cada punto será convertido a {{ Constants.currency_exchange }}
+              {{ Constants.currency }}. A esto se le sumará su pago fijo por asistir ({{ Constants.min_pay }} {{ Constants.currency }}).
+              <br><br>
+              Por lo tanto, su pago final es:
+            <br>
+        <h1>{{ participant.payoff_plus_participation_fee }}</h1>
+          <br>
+            <i>Si su pago total es menor a {{ Constants.min_pay }} {{ Constants.currency }} usted tiene asegurado su pago
+                por asistir, así que recibirá {{ Constants.min_pay }} {{ Constants.currency }}</i>
+            <br><br>
+            <h6 id="midi">Por favor permanezca sentado hasta que lo llamen para entregarle su pago.</h6>
+          </p>
+            <button type="otree-btn-next" class="btn button btn-md" style="float: right;"> Terminar </button>
+          <br><br>
+      </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block styles %}
+    <style type="text/css">
+        img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .button {
+            background-color: #000000;
+            color: #EEE8AA;
+            border: 2px solid #EEE8AA
+        }
+        .button:hover {
+            background-color: #EEE8AA;
+            color: #000000;
+            border: 2px solid #000000
+        }
+        #upper{
+            background-color: #000000;
+        }
+        #middle{
+            background-color: #424242;
+        }
+        #midi{
+            color: #424242;
+        }
+        #lower{
+            color: #EEE8AA
+        }
+        #network{
+            background-color: #ffffff;
+        }
+        #pale{
+            background-color: #F5F5F5;
+        }
+        #in_tie{
+            background-color: #000000;
+            color: #ffffff
+        }
+        #out_tie{
+            background-color: #616161;
+            color: #ffffff
+        }
+        .buttonup {
+            background-color: #9C27B0;
+            color: #ffffff;
+            border: 1px solid #AD1457;
+            padding: 1px 2px;
+            display: inline-block;
+            {#font-size: 13px;#}
+        }
+        .buttondown {
+            background-color: #00BCD4;
+            color: #ffffff;
+            border: 1px solid #00838F;
+            padding: 1px 2px;
+            display: inline-block;
+            {#font-size: 13px;#}
+        }
+        .button_inst2 {
+            background-color: #EEE8AA;
+            color: #000000;
+            border: 1px solid #000000;
+            padding: 1px 2px;
+            display: inline-block;
+            {#font-size: 13px;#}
+        }
+    </style>
+{% endblock %}

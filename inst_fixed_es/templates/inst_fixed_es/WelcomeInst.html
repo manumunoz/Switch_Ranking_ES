@@ -1,0 +1,105 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+<div class="container">
+    <div class="row">
+      <div class="col-sm-12 border border-dark text-white rounded" id="upper">
+        <h2> Esta es la Parte {{ Constants.part_fixed }}</h2>
+      </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+      <div class="col-sm-12 border rounded" id="pale">
+        <p>
+            En las siguientes pantallas podrá leer las instrucciones de la Parte {{ Constants.part_fixed }}.
+            Al finalizar las instrucciones usted verá un resumen de la información más importante.
+            Este <b>resumen</b> estará disponible en cada pantalla durante la Parte {{ Constants.part_fixed }}.
+        </p>
+      </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+      <div class="col-sm-2 border text-white rounded" id="network">
+            <img width="100%" src="{% static "inst_fixed_es/Img_A5.jpeg" %}"/>
+      </div>
+      <div class="col-sm-10 border rounded" id="pale">
+        <p>
+            <br>
+            La parte {{ Constants.part_fixed }} tiene <b>{{ Constants.rounds_fixed }} rondas</b>. Así como en la Parte {{ Constants.part_name }},
+            una vez la Parte {{ Constants.part_fixed }} haya terminado, usted leerá las instrucciones de la Parte {{ Constants.part_fluid }}.
+            En la Parte {{ Constants.part_fixed }} usted puede interacturar con los mismos {{ Constants.others }} otros jugadores de
+            la Parte {{ Constants.part_name }}, aquellos en el grupo &#9679 ({{ circles_label }}) y aquellos en el grupo &#9650 ({{ triangles_label }}).
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2 border text-white rounded" id="network">
+            <img width="100%" src="{% static "inst_fixed_es/Img_A6.jpeg" %}"/>
+      </div>
+      <div class="col-sm-10 border rounded" id="pale">
+        <p>
+            <br>
+            Cada una de las {{ Constants.rounds_fixed }} rondas en la Parte {{ Constants.part_fixed }} tiene 3 etapas:
+            <b>Conexiones</b> (etapa 1), <b>Acciones</b> (etapa 2), y <b>Resultados</b> (etapa 3). Las decisiones que
+            usted tomará en cada etapa se explican en las siguientes pantallas.
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2 border text-white rounded" id="network">
+            <img width="100%" src="{% static "inst_fixed_es/Img_A7.jpeg" %}"/>
+      </div>
+      <div class="col-sm-10 border rounded" id="pale">
+        <p>
+            <br>
+            Usted recibirá el pago por <b>una de las {{ Constants.rounds_fixed }} rondas</b> de la Parte {{ Constants.part_fixed }}.
+            Al finalizar el estudio, el computador seleccionará de manera aleatoria cúal ronda se usará para su pago.
+        </p>
+            <button type="otree-btn-next" class="btn button btn-md" style="float: right;"> Continuar </button>
+          <br><br>
+      </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block styles %}
+    <style type="text/css">
+        img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .button {
+            background-color: #000000;
+            color: #EEE8AA;
+            border: 2px solid #EEE8AA
+        }
+        .button:hover {
+            background-color: #EEE8AA;
+            color: #000000;
+            border: 2px solid #000000
+        }
+        #upper{
+            background-color: #000000;
+        }
+        #middle{
+            background-color: #424242;
+        }
+        #lower{
+            color: #EEE8AA
+        }
+        #network{
+            background-color: #ffffff;
+        }
+        #pale{
+            background-color: #F5F5F5;
+        }
+    </style>
+{% endblock %}

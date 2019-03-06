@@ -1,0 +1,193 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 border border-dark text-white rounded" id="upper">
+            <h2> Decisiones en la Parte {{ Constants.part_fixed }}</h2>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8 border rounded" id="pale">
+            <p>
+                <h5>Grupos, Apariencias y Etiquetas</h5>
+                En la Parte {{ Constants.part_fixed }} usted participará con {{ Constants.others }} jugadores más (los mismos
+                que en la Parte {{ Constants.part_name }}). Cada jugador ha sido asignado a uno de dos grupos (símbolo interno)
+                dependiendo del número de sumas correctas que haya logrado en la Parte {{ Constants.part_task }}:
+                su grupo es &#9650 "{{ triangles_label }}" si es uno de los {{ Constants.total_triangles }} jugadores
+                con el <b>mayor número</b> de sumas correctas ó &#9679 "{{ circles_label }}" si es uno de los {{ Constants.total_circles }}
+                jugadores con el <b>menor número</b> de sumas correctas. También tendrá una apariencia &#9651 ó &#9711 (símbolo externo).
+                Cada jugador tendrá además una etiqueta numérica del 1 al {{ names }}. Usted verá el grupo, apariencia y
+                etiqueta de cada jugador en la pantalla (ver Figura 1).
+                <br><br>
+                En el encabezado de cada pantalla usted verá un resumen de esta información como se muestra en el ejemplo
+                debajo:
+                <br><br>
+                <img width="70%" src="{% static "inst_fixed_es/Img_B4.png" %}"/>
+                <br>
+                En cada ronda hay {{ Constants.total_circles }} jugadores en el grupo &#9679 "{{ circles_label }}"
+                y {{ Constants.total_triangles }} en el grupo &#9650 "{{ triangles_label }}".
+                <b>Ni</b> el grupo <b>ni</b> la apariencia de los jugadores <b>cambiará</b> entre rondas durante la
+                Parte {{ Constants.part_fixed }}, mientras que su etiqueta numérica y su posición en la pantalla
+                <b>cambiarán de manera aleatoria en cada ronda</b>.
+                <br><br>
+                Por ejemplo, el jugador en el encabezado de arriba está en el grupo &#9679 "{{ circles_label }}"
+                y tiene la etiqueta numérica 7 en la ronda 1. En la ronda 2, el mismo jugador estará en el mismo grupo
+                que antes pero su etiqueta puede ser cualquier número entre 1 y {{ names }}, y podrá estar ubicado en
+                cualquier posición de la pantalla. Lo mismo pasará con todos los demás jugadores.
+            </p>
+        </div>
+        <div class="col-sm-4 border rounded" id="network">
+            <br>
+            <h6>Fig. 1: Grupos </h6>
+            <img width="100%" src="{% static "inst_fixed_es/Img_B1.png" %}"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-8 border rounded" id="pale">
+            <p>
+                <h5>Etapa 1: Conexiones</h5>
+                En la <b>etapa de Conexiones</b> usted podrá proponerle una conexión a cada uno de los jugadores con
+                quienes quiera participar en la Etapa 2. Usted podrá proponerle una conexión a cualquier jugador sin importar
+                su grupo o apariencia. Si usted le propone una conexión a un jugador que <b>también</b> le proponga a usted,
+                habrá una <b>conexión activa</b> entre ustedes dos. En la Etapa 2 usted <b>participará únicamente</b> con
+                los jugadores con quienes tenga una conexión activa.
+                <br><br>
+                Usted verá sus conexiones en la pantalla (ver Figura 2). Habrá una <span id="out_tie">flecha clara</span>
+                saliendo de usted por cada conexión que usted haya propuesto, y una <span id="in_tie">flecha oscura</span>
+                dirigida hacia usted por cada conexión que le hayan propuesto. <b>Sólo si las dos</b> flechas están presentes
+                usted tendrá una <b>conexión activa</b> con otro jugador. Si sólo uno de ustedes propone una conexión pero
+                el otro no la propone, no habrá una conexión activa entre ustedes dos. <i>*Sus conexión están ilustradas
+                con lineas más gruesas y las de los demás con líneas más delgadas.</i>
+            </p>
+        </div>
+        <div class="col-sm-4 border rounded" id="network">
+            <br>
+            <h6>Fig. 2: Conexiones </h6>
+            <img width="100%" src="{% static "inst_fixed_es/Img_B2.png" %}"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-8 border rounded" id="pale">
+            <p>
+                <h5>Etapa 2: Acciones</h5>
+                En la <b>etapa de Acciones</b> usted elegirá una de dos acciones: <button class="btn buttonup btn-sm" disabled>violeta</button> ó
+                <button class="btn buttondown btn-sm" disabled>celeste</button>. Usted elegirá una sóla acción en esta etapa, no una para cada conexión.
+                Usted ganará {{ Constants.exp_currency }} por cada una de sus conexiones activas que elija <b>la misma acción que usted haya elegido</b>.
+                Usted <b>no</b> ganará {{ Constants.exp_currency }} por una conexión activa que haya elegido <b>una acción distinta</b>
+                a la suya, ni por un jugador que haya elegido la misma acción que usted, si usted <b>no tiene</b> una
+                conexión activa con este jugador.
+                <br><br>
+                La acción elegida por cada jugador estará ilustrada por el color de su apariencia (ver Figura 3).
+            </p>
+        </div>
+        <div class="col-sm-4 border rounded" id="network">
+            <br>
+            <h6>Fig. 3: Acciones </h6>
+            <img width="100%" src="{% static "inst_fixed_es/Img_B3.png" %}"/>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 border rounded" id="network">
+            <br>
+            <h4>Antes de continuar, por favor conteste las siguientes preguntas de comprensión:</h4>
+            <br>
+            <p>
+            <b>1. Usted ha sido asignado a un grupo: &#9679 ó &#9650 (símbolo interno). Con qué frecuencia cambiará su grupo?</b>
+            <br>
+            <small>{% formfield player.given_group label="" %}</small>
+            </p>
+            <p>
+            <b>2. Usted tendrá una apariencia: &#9711 ó &#9651 (símbolo externo). Con qué frecuencia cambiará su apariencia?</b>
+            <br>
+            <small>{% formfield player.appearance label="" %}</small>
+            </p>
+            <p>
+            <b>3. Se le asignará una etiqueta entre 1 y {{ names }}. Con qué frecuencia cambiará su etiqueta?</b>
+            <br>
+            <small>{% formfield player.label label="" %}</small>
+            </p>
+            <p>
+            <b>4. En la Etapa 2 (Acciones) usted sólo participará con sus conexiones activas. Cuándo una conexión se vuelve activa?</b>
+            <br>
+            <small>{% formfield player.active label="" %}</small>
+            </p>
+            <p>
+            <b>5. En la Figura 2 arriba, cuántas conexiones activas tiene el jugador 7?</b>
+            <br>
+            <small>{% formfield player.count label="" %}</small>
+            </p>
+            <button type="otree-btn-next" class="btn button btn-md" style="float: right;"> Continuar </button>
+            <br><br>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block styles %}
+    <style type="text/css">
+        img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .button {
+            background-color: #000000;
+            color: #EEE8AA;
+            border: 2px solid #EEE8AA
+        }
+        .button:hover {
+            background-color: #EEE8AA;
+            color: #000000;
+            border: 2px solid #000000
+        }
+        #upper{
+            background-color: #000000;
+        }
+        #middle{
+            background-color: #424242;
+        }
+        #lower{
+            color: #EEE8AA
+        }
+        #network{
+            background-color: #ffffff;
+        }
+        #pale{
+            background-color: #F5F5F5;
+        }
+        #in_tie{
+            background-color: #000000;
+            color: #ffffff
+        }
+        #out_tie{
+            background-color: #616161;
+            color: #ffffff
+        }
+        .buttonup {
+            background-color: #9C27B0;
+            color: #ffffff;
+            border: 1px solid #AD1457;
+            padding: 1px 2px;
+            display: inline-block;
+            {#font-size: 13px;#}
+        }
+        .buttondown {
+            background-color: #00BCD4;
+            color: #ffffff;
+            border: 1px solid #00838F;
+            padding: 1px 2px;
+            display: inline-block;
+            {#font-size: 13px;#}
+        }
+    </style>
+{% endblock %}

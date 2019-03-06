@@ -1,0 +1,150 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+<div class="container">
+    <div class="row">
+      <div class="col-sm-12 border border-dark text-white rounded" id="upper">
+          <h2>Parte {{ Constants.part_name }}: <span id="lower"> Su grupo</span></h2>
+      </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+      <div class="col-sm-12 border rounded" id="network">
+        <p>
+            Aquí le explicamos la información visual de su grupo (la forma en que será representado en la pantalla).
+            Esta información será útil para las siguientes partes del experimento.
+            En esta parte usted además tomará una decisión junto con los demás jugadores asignados a su grupo: ustedes
+            escogerán un nombre para su grupo. Esto se explica a continuación:
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6 border rounded" id="network">
+        <h5>1. Imagen del grupo</h5>
+        <p>
+            {% if player.given_type == 1 %}
+            Usted es uno de los jugadores con el <b>menor número</b> de sumas correctas. Por lo tanto, usted ha sido asignado
+            al <b>grupo</b> <span id='symbol'>&#9679</span> (símbolo interno) y su <b>apariencia</b> es
+            <span id='symbol'>&#9711</span> (símbolo externo).
+            <br><br>
+            Hay {{ Constants.total_circles }} jugadores en su grupo <span id='symbol'>&#9679</span>, incluyéndolo a usted.
+            Hay {{ Constants.total_triangles }} jugadores en el grupo <span id='symbol'>&#9650</span>.
+            <br><br>
+            Cada jugador en su grupo será representado en la pantalla usando la siguiente imagen:
+            <br><br>
+            <img width="50%" src="{% static "name_es/Img_T1.jpeg" %}"/>
+            <br><br>
+            En la caja de chat al lado derecho usted podrá hablar con los otros participantes del grupo <span id='symbol'>&#9679</span>
+            y elegir un nombre para su grupo, <i>presionando el botón con el nombre que ustedes prefieran como grupo</i>.
+            <b>Para elegir un nombre, todos los {{ Constants.total_circles }} jugadores en su grupo deben presionar
+            el mismo botón</b>.
+
+            {% elif player.given_type == 5 %}
+            Usted es uno de los jugadores con el <b>mayor número</b> de sumas correctas. Por lo tanto, usted ha sido asignado
+            al <b>grupo</b> <span id='symbol'>&#9650</span> (símbolo interno) y su <b>apariencia</b> es
+            <span id='symbol'>&#9651</span> (símbolo externo).
+            <br><br>
+            Hay {{ Constants.total_triangles }} jugadores en su grupo <span id='symbol'>&#9650</span>, incluyéndolo a usted.
+            Hay {{ Constants.total_circles }} jugadores en el grupo <span id='symbol'>&#9679</span>.
+            <br><br>
+            Cada jugador en su grupo será representado en la pantalla usando la siguiente imagen:
+            <br><br>
+            <img width="50%" src="{% static "name_es/Img_T2.jpeg" %}"/>
+            <br><br>
+            En la caja de chat al lado derecho usted podrá hablar con los otros participantes del grupo <span id='symbol'>&#9650</span>
+            y elegir un nombre para su grupo, <i>presionando el botón con el nombre que ustedes prefieran como grupo</i>.
+            <b>Para elegir un nombre, todos los {{ Constants.total_triangles }} jugadores en su grupo deben presionar
+            el mismo botón</b>.
+            {% endif %}
+        </p>
+      </div>
+      <div class="col-sm-6 border rounded" id="network">
+        <div>
+          <h5>2. Nombre del grupo</h5>
+          <p>
+              En la caja de chat debajo, usted será etiquetado como <b>Jugador {{ player.role }}</b>. No está permitido
+              usar lenguaje ofensivo. Y para mantener la anonimidad, tampoco está permitido enviar ninguna información
+              que le permita a los demás indentificar quién es usted.
+              <br><br>
+              <i>Escriba en la caja de chat para comunicarse con los otros jugadores en su grupo.</i>
+          </p>
+        </div>
+        <div>
+              {% chat nickname=player.chat_nickname channel=player.chat_channel %}
+        </div>
+        <div id="centering">
+            <br>
+          <p>
+              <b>Presione el botón con el nombre que su grupo ha elegido</b>.
+          </p>
+            <input type="hidden" value="0" name="group_name" id="group_name"/>
+            {% if player.given_type == 1 %}
+            <button type="otree-btn-next" class="btn button btn-lg" onclick="$('#group_name').val(5)">{{Constants.group_e}}</button>
+            <button type="otree-btn-next" class="btn button btn-lg" onclick="$('#group_name').val(2)">{{Constants.group_b}}</button>
+            <button type="otree-btn-next" class="btn button btn-lg" onclick="$('#group_name').val(1)">{{Constants.group_a}}</button>
+            <br>
+            <button type="otree-btn-next" class="btn button btn-lg" onclick="$('#group_name').val(4)">{{Constants.group_d}}</button>
+            <button type="otree-btn-next" class="btn button btn-lg" onclick="$('#group_name').val(3)">{{Constants.group_c}}</button>
+            {% elif player.given_type == 5 %}
+            <button type="otree-btn-next" class="btn button btn-lg" onclick="$('#group_name').val(10)">{{Constants.group_j}}</button>
+            <button type="otree-btn-next" class="btn button btn-lg" onclick="$('#group_name').val(7)">{{Constants.group_g}}</button>
+            <button type="otree-btn-next" class="btn button btn-lg" onclick="$('#group_name').val(6)">{{Constants.group_f}}</button>
+            <br>
+            <button type="otree-btn-next" class="btn button btn-lg" onclick="$('#group_name').val(9)">{{Constants.group_i}}</button>
+            <button type="otree-btn-next" class="btn button btn-lg" onclick="$('#group_name').val(8)">{{Constants.group_h}}</button>
+            {% endif %}
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block styles %}
+    <style type="text/css">
+        img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .button {
+            background-color: #000000;
+            color: #EEE8AA;
+            border: 2px solid #EEE8AA
+        }
+        .button:hover {
+            background-color: #EEE8AA;
+            color: #000000;
+            border: 2px solid #000000
+        }
+        #upper{
+            background-color: #000000;
+        }
+        #middle{
+            background-color: #424242;
+        }
+        #lower{
+            color: #EEE8AA
+        }
+        #network{
+            background-color: #ffffff;
+        }
+        #symbol{
+            color: #616161;
+        }
+        .otree-chat__messages {
+            height: 400px;
+        }
+        .otree-chat__nickname {
+            color: #000000;
+            font-weight: bold;
+        }
+        #centering{
+            text-align: center
+        }
+    </style>
+{% endblock %}

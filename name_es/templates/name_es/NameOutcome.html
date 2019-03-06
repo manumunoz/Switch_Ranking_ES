@@ -1,0 +1,91 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+<div class="container">
+    <div class="row">
+      <div class="col-sm-12 border border-dark text-white rounded" id="upper">
+        {% if player.given_type == 1 %}
+            <h2>El nombre de su grupo es: <span id="lower">{{ group.circles_label }}</span></h2>
+        {% elif player.given_type == 5 %}
+            <h2>El nombre de su grupo es: <span id="lower">{{ group.triangles_label }}</span></h2>
+        {% endif %}
+      </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+      <div class="col-sm-12 border rounded" id="network">
+        <p>
+            {% if player.given_type == 1 %}
+                {% if group.circles_coord == 1 %}
+                    Todos los {{ Constants.total_circles }} jugadores en su grupo eligieron el mismo nombre.
+                {% elif group.circles_coord == 0 %}
+                    No todos los {{ Constants.total_circles }} jugadores en su grupo eligieron el mismo nombre.
+                    Así que el nombre de su grupo fue asignado de manera aleatoria.
+                {% endif %}
+            {% elif player.given_type == 5 %}
+                {% if group.triangles_coord == 1 %}
+                    Todos los {{ Constants.total_triangles }} jugadores en su grupo eligieron el mismo nombre.
+                {% elif group.triangles_coord == 0 %}
+                    No todos los {{ Constants.total_triangles }} jugadores en su grupo eligieron el mismo nombre.
+                    Así que el nombre de su grupo fue asignado de manera aleatoria.
+                {% endif %}
+            {% endif %}
+            <button type="otree-btn-next" class="btn button btn-md" style="float: right;"> Continuar </button>
+          <br>
+        </p>
+      </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block styles %}
+    <style type="text/css">
+        img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .buttonname {
+            background-color: #EEE8AA;
+            color: #000000;
+            border: 1px solid #000000
+        }
+        .button {
+            background-color: #000000;
+            color: #EEE8AA;
+            border: 2px solid #EEE8AA
+        }
+        .button:hover {
+            background-color: #EEE8AA;
+            color: #000000;
+            border: 2px solid #000000
+        }
+        #upper{
+            background-color: #000000;
+        }
+        #middle{
+            background-color: #424242;
+        }
+        #lower{
+            color: #EEE8AA
+        }
+        #network{
+            background-color: #ffffff;
+        }
+        #symbol{
+            color: #616161;
+        }
+        .otree-chat__messages {
+            height: 400px;
+        }
+        .otree-chat__nickname {
+            color: #000000;
+            font-weight: bold;
+        }
+    </style>
+{% endblock %}
