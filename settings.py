@@ -137,7 +137,7 @@ SESSION_CONFIGS = [
     {
         'name': 'sticky_ranking_es',
         'display_name': "sticky_ranking_es",
-        'num_demo_participants': 28,
+        'num_demo_participants': 7,
         'app_sequence': ['task_sums', 'given_type', 'name_es', 'inst_fixed_es', 'fixed_es', 'inst_fluid_es', 'fluid_es',
                          'alloc_es', 'pay_es'],
         # 'app_sequence': ['task_sums', 'given_type', 'name_es'],
